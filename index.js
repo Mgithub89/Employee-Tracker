@@ -68,7 +68,31 @@ function start() {
 }
 
 function viewEmployees() {
+    let allEmployee = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary,CONCAT(m.first_name, " ", m.last_name) AS manager
+    FROM employee 
+    LEFT JOIN role ON employee.role_id = role.id 
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee m ON m.id = employee.manager_id`
+    connection.query(allEmployee, (err, data) => {
+        if (err) throw err;
+        // let employeeArr = [];
+        // for (const employee of data) {
+        //     let employeeTable =
+        //     {
+        //         id: employee.id,
+        //         first_name: employee.first_name,
+        //         last_name: employee.last_name,
+        //         role_id: employee.role_id,
+        //         manager_id: employee.manager_id
 
+        //     }
+        //     employeeArr.push(employeeTable);
+
+        // }
+        // console.table(employeeArr);
+        console.table(data);
+        start();
+    })
 }
 
 function addDepartment() {
@@ -160,22 +184,41 @@ function viewDepartment() {
     let department = 'SELECT * FROM department';
     connection.query(department, (err, data) => {
         if (err) throw err;
-        let deptArr = [];
-        for (const dept of data) {
-            let table =
-            {
-                id: dept.id,
-                name: dept.name
-            }
-            deptArr.push(table);
+        // let deptArr = [];
+        // for (const dept of data) {
+        //     let deptTable =
+        //     {
+        //         id: dept.id,
+        //         name: dept.name
+        //     }
+        //     deptArr.push(deptTable);
 
-        }
-        console.table(deptArr);
+        // }
+        // console.table(deptArr);
+        console.table(data);
         start();
     })
 }
 
 function viewRoles() {
+    let role = 'SELECT * FROM role';
+    connection.query(role, (err, data) => {
+        if (err) throw err;
+        // let roleArr = [];
+        // for (const role of data) {
+        //     let roleTable =
+        //     {
+        //         id: role.id,
+        //         title: role.title,
+        //         salary: role.salary,
+        //         department_id: role.department_id
+        //     }
+        //     roleArr.push(roleTable);
+        // }
+        // console.table(roleArr);
+        console.table(data);
+        start();
+    })
 
 }
 
