@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql");
 const table = require("console.table");
 require("dotenv").config();
+const chalk = require('chalk');
 
 //create database connection
 const connection = mysql.createConnection({
@@ -92,6 +93,7 @@ function viewEmployees() {
     LEFT JOIN employee m ON m.id = employee.manager_id`
     connection.query(allEmployee, (err, data) => {
         if (err) throw err;
+        console.log(chalk.green("viewing all Employees"));
         console.table(data);
         start();
     })
@@ -175,7 +177,7 @@ function addDepartment() {
         let dep = 'INSERT INTO department SET ?';
         connection.query(dep, { name: answer.add }, (err) => {
             if (err) throw err;
-            console.log("New department added!");
+            console.log(chalk.green("NEW DEPARTMENT ADEDED!"));
             start();
         })
     })
@@ -224,7 +226,7 @@ function addRole() {
                     department_id: deptID
                 }, (err) => {
                     if (err) throw err;
-                    console.log("New role added!");
+                    console.log(chalk.green("New role added!"));
                     start();
                 })
             })
@@ -293,7 +295,7 @@ function addEmployee() {
                         manager_id: manager[0].id
                     }, (err) => {
                         if (err) throw err;
-                        console.log("New epmloyee added!");
+                        console.log(chalk.green("New epmloyee added!"));
                         start();
                     })
                 })
@@ -306,6 +308,7 @@ function viewDepartment() {
     let department = 'SELECT * FROM department';
     connection.query(department, (err, data) => {
         if (err) throw err;
+        console.log(chalk.green("viewing all Department"));
         console.table(data);
         start();
     })
@@ -316,6 +319,7 @@ function viewRoles() {
     let role = 'SELECT role.id, role.title, department.name AS Department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id'
     connection.query(role, (err, data) => {
         if (err) throw err;
+        console.log(chalk.green("viewing all Roles"));
         console.table(data);
         start();
     })
@@ -366,7 +370,7 @@ function updateRole() {
                                 connection.query(`UPDATE employee SET employee.role_id = '${newRoleId}' 
                                   WHERE employee.first_name = ?`, [answer.employeeName], (err) => {
                                     if (err) throw err;
-                                    console.log("role successfully updated");
+                                    console.log(chalk.green("role successfully updated"));
                                     start();
                                 })
                             })
@@ -397,7 +401,7 @@ function removeEmployee() {
             .then(answer => {
                 connection.query("DELETE FROM employee WHERE CONCAT(first_name, ' ', last_name) = ?", [answer.delete], (err) => {
                     if (err) throw err;
-                    console.log("selected employee succesfully deleted!")
+                    console.log(chalk.green("selected employee succesfully deleted!"));
                     start();
                 })
             })
