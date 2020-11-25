@@ -36,6 +36,7 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 * MySQL
 * node
 * console.table
+* figlet
 
 ## Contributing
 * Feel free to contribute. just contact me via email and fork my project

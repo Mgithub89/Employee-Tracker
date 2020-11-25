@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const table = require("console.table");
 require("dotenv").config();
 const chalk = require('chalk');
+const figlet = require('figlet');
 
 //create database connection
 const connection = mysql.createConnection({
@@ -24,7 +25,11 @@ connection.connect(function (err) {
         start();
     }
 });
-
+console.log(
+    chalk.yellow(
+        figlet.textSync('Employee Manager', { horizontalLayout: "default", verticalLayout: 'default', })
+    )
+);
 //function to start
 function start() {
     inquirer.prompt({
@@ -126,6 +131,7 @@ function viewByDepartment() {
 
                 connection.query(query, [answer.departments], (err, data) => {
                     if (err) throw err;
+                    console.log(chalk.green(`Here is all employees in ${answer.departments} departement.`))
                     console.table(data);
                     start();
                 })
@@ -156,6 +162,7 @@ function viewByManager() {
                     if (err) throw err;
                     connection.query("SELECT * FROM employee WHERE manager_id = ?", [data[0].id], (err, employees) => {
                         if (err) throw err;
+                        console.log(chalk.green(`Here is all employees under ${answer.byManager}`));
                         console.table(employees);
                         start();
                     })
@@ -235,13 +242,13 @@ function addRole() {
 
 // Add employee to the DB
 function addEmployee() {
-    let managerArr = [];
-    connection.query(`SELECT * FROM employee `, (err, managers) => {
+    let employeesArr = ["none"];
+    connection.query(`SELECT * FROM employee `, (err, employees) => {
         if (err) throw err;
         // creat manager arr to assign a manager for the new employee to be added
-        for (const manager of managers) {
-            let mgr = manager.first_name
-            managerArr.push(mgr)
+        for (const employee of employees) {
+            let empl = `${employee.first_name} ${employee.last_name}`
+            employeesArr.push(empl)
         }
     })
     connection.query('SELECT * FROM role', (err, data) => {
@@ -274,7 +281,7 @@ function addEmployee() {
                 type: "list",
                 name: "managerName",
                 message: "What is the manager name for this employee?",
-                choices: managerArr
+                choices: employeesArr
             }
         ])
             .then(answer => {
@@ -284,20 +291,24 @@ function addEmployee() {
                         roleID = data[i].id;
                     }
                 }
-                connection.query('SELECT * FROM employee WHERE CONCAT (first_name, " " , last_name) = ?', [answer.managerName], (err, manager) => {
+                connection.query('SELECT * FROM employee WHERE CONCAT(first_name, " ", last_name) = ?', [answer.managerName], (err, manager) => {
                     if (err) throw err;
                     //adding new employee to the employee table
                     let emplo = 'INSERT INTO employee SET ?';
-                    connection.query(emplo, {
-                        first_name: answer.firstName,
-                        last_name: answer.lastName,
-                        role_id: roleID,
-                        manager_id: manager[0].id
-                    }, (err) => {
-                        if (err) throw err;
-                        console.log(chalk.green("New epmloyee added!"));
-                        start();
-                    })
+                    connection.query(emplo,
+                        {
+                            first_name: answer.firstName,
+                            last_name: answer.lastName,
+                            role_id: roleID || null,
+                            manager_id: answer.managerName !== "None" ? manager[0].id : null
+                        },
+                        (err) => {
+                            if (err) throw err;
+                            console.log("==========================================================================");
+                            console.log(chalk.green(`${answer.firstName} ${answer.lastName} with the ${answer.rolename} role added to the DB under ${answer.managerName}`));
+                            console.log("==========================================================================");
+                            start();
+                        })
                 })
             })
     });
