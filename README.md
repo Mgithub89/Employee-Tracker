@@ -34,7 +34,7 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 ![image](Assets/demo.gif)
 
 ## Screen Shoot
-![image](Assets/employee.png)
+![image](Assets/employee.PNG)
 
 ## Technologies used
 * inquirer
