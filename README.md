@@ -33,6 +33,9 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 
 ![image](Assets/demo.gif)
 
+## Screen Shoot
+![image](Assets/employee.png)
+
 ## Technologies used
 * inquirer
 * MySQL
