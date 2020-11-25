@@ -29,7 +29,9 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 6. Answer each following questions after you select the action to update the DB.
 7. Updated database will display in the terminal. 
 
-* [A walkthrough video](https://drive.google.com/file/d/1SF7YSCp4t1G-cmr-s0Y0SBdeYXNNuvbF/view) 
+* [A walkthrough video](https://drive.google.com/file/d/1nG5_PdBsrNvXLDimS3TMDjwrqjwY6YKU/view) 
+
+![image](Assets/demo.gif)
 
 ## Technologies used
 * inquirer
