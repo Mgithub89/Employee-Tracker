@@ -18,13 +18,13 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 * [Questions](#Questions)
 
 ## Installation
-* fork the repo and install all the dependencies(npm i).
+* install all the dependencies(npm i ...).
 
 ## usage
 1. Fork the repo
 2. Update the database connection by changing your own password.
 3. Use existing seed.sql or create your seed file and run the schema.sql in MySQL workbench.
-4. Run  node index.js  into your command line
+4. Run  node index.js or npm start into your command line.
 5. Select the action you woluld like to do from prompted choicess in the terminal.
 6. Answer each following questions after you select the action to update the DB.
 7. Updated database will display in the terminal. 
@@ -37,6 +37,7 @@ Explore the [project-page](https://github.com/Mgithub89/Employee-Tracker.git)
 * node
 * console.table
 * figlet
+* chalk
 
 ## Contributing
 * Feel free to contribute. just contact me via email and fork my project
